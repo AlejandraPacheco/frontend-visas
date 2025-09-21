@@ -6,6 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { addMinutes, addDays, startOfWeek } from 'date-fns';
+import { CitaDto } from '../../models/CitaDto';
+import { CitaService } from '../../services/cita.service';
 
 @Component({
   selector: 'app-citas',
@@ -36,7 +38,9 @@ export class CitasComponent {
   // Slot seleccionado
   slotSeleccionado: { dia: Date, hora: string } | null = null;
 
-  constructor() {
+  citasSemana: CitaDto[] = [];
+
+  constructor(private citaService: CitaService) {
     this.generarSemana();
     this.generarHoras();
   }
@@ -51,6 +55,14 @@ export class CitasComponent {
         fecha
       };
     });
+
+    // cargar citas de esa semana
+    this.citaService
+      .listarCitasSemana(monday.toISOString().split('T')[0])
+      .subscribe({
+        next: (data) => (this.citasSemana = data),
+        error: (err) => console.error('Error al obtener citas', err)
+      });
   }
 
   // Genera los horarios de 8:30 a 12:30 cada 20 min
@@ -73,15 +85,27 @@ export class CitasComponent {
 
   // Simulación de estados
   getEstadoSlot(dia: any, hora: string): string {
-    if (dia.nombre.toLowerCase() === 'lunes' && hora.startsWith('08:30')) {
+    const fechaStr = dia.fecha.toISOString().split('T')[0];
+    const horaStr = hora.split(' - ')[0];
+
+    // Buscar si existe una cita en ese día y hora
+    const citaOcupada = this.citasSemana.find(
+      (c) =>
+        c.fechaCita.startsWith(fechaStr) &&
+        c.horaCita.startsWith(horaStr)
+    );
+
+    if (citaOcupada) {
       return 'Ocupado';
     }
+
     if (
       this.slotSeleccionado?.dia.getTime() === dia.fecha.getTime() &&
       this.slotSeleccionado?.hora === hora
     ) {
       return 'Seleccionado';
     }
+
     return 'Disponible';
   }
 
@@ -93,9 +117,21 @@ export class CitasComponent {
 
   confirmarCita() {
     if (this.slotSeleccionado) {
-      alert(
-        `Cita confirmada el ${this.slotSeleccionado.dia.toLocaleDateString()} a las ${this.slotSeleccionado.hora}`
-      );
+      const dto: CitaDto = {
+        idSolicitud: 12, // ⚠️ aquí pon el ID real de la solicitud del usuario
+        fechaCita: this.slotSeleccionado.dia.toISOString().split('T')[0],
+        horaCita: this.slotSeleccionado.hora.split(' - ')[0] // toma hora de inicio
+      };
+
+      this.citaService.crearCita(dto).subscribe({
+        next: (res) => {
+          alert(`✅ Cita confirmada: ${dto.fechaCita} a las ${dto.horaCita}`);
+        },
+        error: (err) => {
+          alert('❌ Error al guardar la cita');
+          console.error(err);
+        }
+      });
     }
   }
 
