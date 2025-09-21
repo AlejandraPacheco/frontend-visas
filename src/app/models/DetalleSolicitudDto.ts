@@ -7,8 +7,8 @@ export interface DetalleSolicitudDto {
     nacionalidad: string;
     ci: string;
     profesion: string;
-    idMotivo: number;
-    fechaLlegadaSpain: string | null; // puede ser null si no está definido
-    fechaSalidaSpain: string | null;  // puede ser null si no está definido
+    motivoDescripcion: string;
+    fechaLlegadaSpain: string;
+    fechaSalidaSpain: string;  
     estado: string;
 }
