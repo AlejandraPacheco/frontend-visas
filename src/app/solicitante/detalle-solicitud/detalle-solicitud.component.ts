@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SolicitudesService } from '../../services/solicitudes.service';
+import { DetalleSolicitudDto } from '../../models/DetalleSolicitudDto';
 
 @Component({
   selector: 'app-detalle-solicitud',
@@ -11,31 +13,33 @@ import { Router } from '@angular/router';
 })
 export class DetalleSolicitudComponent implements OnInit {
   username: string = localStorage.getItem('username') || 'Solicitante';
+  solicitud!: DetalleSolicitudDto;
+  idSolicitud!: number;
 
-  // Hardcode temporal para mostrar diseño
-  solicitud = {
-    numero: '0001',
-    fecha: new Date(),
-    motivo: 'Turismo',
-    estado: 'Pendiente',
-    fechaInicio: new Date('2025-11-01'),
-    fechaFin: new Date('2025-11-15'),
-    nombres: 'Juan',
-    apellidos: 'Pérez',
-    ci: '1234567',
-    nacionalidad: 'Boliviana',
-    profesion: 'Ingeniero'
-  };
-
-  constructor(private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private solicitudService: SolicitudesService
+  ) {}
 
   ngOnInit(): void {
-    // En producción aquí podrías traer los datos desde el backend
-    // con un servicio y el ID de la solicitud recibido por queryParams
+    this.route.queryParams.subscribe(params => {
+      this.idSolicitud = +params['idSolicitud'];
+      if (this.idSolicitud) {
+        this.cargarDetalle();
+      }
+    });
+  }
+
+  cargarDetalle() {
+    this.solicitudService.getDetalleSolicitud(this.idSolicitud).subscribe({
+      next: (res) => this.solicitud = res,
+      error: (err) => console.error('Error al cargar la solicitud', err)
+    });
   }
 
   volver() {
-    this.router.navigate(['/dashboard/solicitante/mis-solicitudes']);
+    this.router.navigate(['/dashboard-solicitante']);
   }
 
   logout() {
@@ -43,4 +47,3 @@ export class DetalleSolicitudComponent implements OnInit {
     window.location.href = '/login';
   }
 }
-

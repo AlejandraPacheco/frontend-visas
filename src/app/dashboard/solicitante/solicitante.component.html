@@ -41,7 +41,7 @@
             <td>{{ solicitud.idSolicitud }}</td>
             <td>{{ solicitud.fechaSolicitud | date:'dd/MM/yyyy' }}</td>
             <td>{{ solicitud.estado }}</td>
-            <td><button (click)="verDetalles(solicitud)">Ver</button></td>
+            <td><button (click)="verDetalle(solicitud.idSolicitud)">Ver</button></td>
             </tr>
         </tbody>
         </table>

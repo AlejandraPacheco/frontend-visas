@@ -1,18 +1,14 @@
 <div class="dashboard-container">
-    <!-- Sidebar -->
-    <nav class="sidebar">
+  <!-- Sidebar (igual que antes) -->
+  <nav class="sidebar">
         <div class="logo-section">
         <img src="../../../assets/pasaporte.png" alt="Logo" class="logo" />
         <span class="system-name">Visa.ES</span>
         </div>
         <hr class="divider" />
         <ul class="menu">
-        <li routerLinkActive="active">
-            <a routerLink="/dashboard/solicitante/mis-solicitudes">Mis Solicitudes</a>
-        </li>
-        <li routerLinkActive="active">
-            <a routerLink="/dashboard/solicitante/mis-citas">Mis Citas</a>
-        </li>
+        <li routerLinkActive="active"><a routerLink="/dashboard/solicitante/mis-solicitudes">Mis Solicitudes</a></li>
+        <li routerLinkActive="active"><a routerLink="/dashboard/solicitante/mis-citas">Mis Citas</a></li>
         </ul>
         <div class="user-section">
         <span>{{ username }}</span>
@@ -27,21 +23,20 @@
         <button class="back-button" (click)="volver()">← Volver</button>
         </div>
 
-        <div class="detalle-card">
-        <!-- Datos generales -->
+        <div class="detalle-card" *ngIf="solicitud">
         <h2 class="section-title">Información de la solicitud</h2>
         <div class="form-grid-2">
             <div class="info-item">
             <label>N° Solicitud:</label>
-            <span>{{ solicitud.numero }}</span>
+            <span>{{ solicitud.idSolicitud }}</span>
             </div>
             <div class="info-item">
             <label>Fecha de solicitud:</label>
-            <span>{{ solicitud.fecha | date:'dd/MM/yyyy' }}</span>
+            <span>{{ solicitud.fechaSolicitud | date:'dd/MM/yyyy' }}</span>
             </div>
             <div class="info-item">
             <label>Motivo del viaje:</label>
-            <span>{{ solicitud.motivo }}</span>
+            <span>{{ solicitud.idMotivo }}</span>
             </div>
             <div class="info-item">
             <label>Estado:</label>
@@ -53,15 +48,14 @@
             </div>
             <div class="info-item">
             <label>Fecha de ingreso:</label>
-            <span>{{ solicitud.fechaInicio | date:'dd/MM/yyyy' }}</span>
+            <span>{{ solicitud.fechaLlegadaSpain | date:'dd/MM/yyyy' }}</span>
             </div>
             <div class="info-item">
             <label>Fecha de salida:</label>
-            <span>{{ solicitud.fechaFin | date:'dd/MM/yyyy' }}</span>
+            <span>{{ solicitud.fechaSalidaSpain | date:'dd/MM/yyyy' }}</span>
             </div>
         </div>
 
-        <!-- Datos del solicitante -->
         <h2 class="section-title">Datos del solicitante</h2>
         <div class="form-grid-2">
             <div class="info-item">

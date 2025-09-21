@@ -34,10 +34,12 @@ export class SolicitanteComponent implements OnInit {
     });
   }
 
-  verDetalles(solicitud: DashboardSolicitanteDto) {
-    console.log('Ver detalles de:', solicitud);
-    // rediriges a otro componente si quieres
-  }
+  verDetalle(idSolicitud: number) {
+  this.router.navigate(['/dashboard/solicitante/detalle-solicitud'], {
+    queryParams: { idSolicitud }
+  });
+}
+
 
   nuevaSolicitud() {
     this.router.navigate(['/dashboard/solicitante/nueva-solicitud']);

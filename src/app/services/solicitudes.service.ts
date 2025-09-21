@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DashboardSolicitanteDto } from '../models/DashboardSolicitanteDto';
 import { SolicitudDto } from '../models/SolicitudDto';
+import { DetalleSolicitudDto } from '../models/DetalleSolicitudDto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,4 +21,9 @@ export class SolicitudesService {
   crearSolicitud(solicitud: SolicitudDto): Observable<SolicitudDto> {
     return this.http.post<SolicitudDto>(`${this.apiUrl}/`, solicitud);
   }
+
+  getDetalleSolicitud(idSolicitud: number) {
+  return this.http.get<DetalleSolicitudDto>(`${this.apiUrl}/${idSolicitud}`);
+}
+
 }
