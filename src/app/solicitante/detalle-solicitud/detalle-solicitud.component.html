@@ -1,0 +1,86 @@
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="logo-section">
+        <img src="../../../assets/pasaporte.png" alt="Logo" class="logo" />
+        <span class="system-name">Visa.ES</span>
+        </div>
+        <hr class="divider" />
+        <ul class="menu">
+        <li routerLinkActive="active">
+            <a routerLink="/dashboard/solicitante/mis-solicitudes">Mis Solicitudes</a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/dashboard/solicitante/mis-citas">Mis Citas</a>
+        </li>
+        </ul>
+        <div class="user-section">
+        <span>{{ username }}</span>
+        <button (click)="logout()">Salir</button>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="header">
+        <h1>Detalle de Solicitud</h1>
+        <button class="back-button" (click)="volver()">← Volver</button>
+        </div>
+
+        <div class="detalle-card">
+        <!-- Datos generales -->
+        <h2 class="section-title">Información de la solicitud</h2>
+        <div class="form-grid-2">
+            <div class="info-item">
+            <label>N° Solicitud:</label>
+            <span>{{ solicitud.numero }}</span>
+            </div>
+            <div class="info-item">
+            <label>Fecha de solicitud:</label>
+            <span>{{ solicitud.fecha | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="info-item">
+            <label>Motivo del viaje:</label>
+            <span>{{ solicitud.motivo }}</span>
+            </div>
+            <div class="info-item">
+            <label>Estado:</label>
+            <span class="estado" [ngClass]="{
+                'pendiente': solicitud.estado === 'Pendiente',
+                'aprobada': solicitud.estado === 'Aprobada',
+                'rechazada': solicitud.estado === 'Rechazada'
+            }">{{ solicitud.estado }}</span>
+            </div>
+            <div class="info-item">
+            <label>Fecha de ingreso:</label>
+            <span>{{ solicitud.fechaInicio | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="info-item">
+            <label>Fecha de salida:</label>
+            <span>{{ solicitud.fechaFin | date:'dd/MM/yyyy' }}</span>
+            </div>
+        </div>
+
+        <!-- Datos del solicitante -->
+        <h2 class="section-title">Datos del solicitante</h2>
+        <div class="form-grid-2">
+            <div class="info-item">
+            <label>Nombre completo:</label>
+            <span>{{ solicitud.nombres }} {{ solicitud.apellidos }}</span>
+            </div>
+            <div class="info-item">
+            <label>Cédula (CI):</label>
+            <span>{{ solicitud.ci }}</span>
+            </div>
+            <div class="info-item">
+            <label>Nacionalidad:</label>
+            <span>{{ solicitud.nacionalidad }}</span>
+            </div>
+            <div class="info-item">
+            <label>Profesión:</label>
+            <span>{{ solicitud.profesion }}</span>
+            </div>
+        </div>
+        </div>
+    </main>
+</div>
