@@ -11,6 +11,7 @@ import { MotivoService } from '../../services/motivo.service';
 import { MotivoDto } from '../../models/MotivoDto';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { SolicitudDto } from '../../models/SolicitudDto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nueva-solicitud',
@@ -51,7 +52,8 @@ export class NuevaSolicitudComponent implements OnInit {
     private sexoService: SexoService,
     private estadoCivilService: EstadocivilService,
     private motivoService: MotivoService,
-    private solicitudesService: SolicitudesService
+    private solicitudesService: SolicitudesService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -120,6 +122,11 @@ export class NuevaSolicitudComponent implements OnInit {
       next: (res) => {
         console.log('Solicitud guardada:', res);
         alert('Solicitud guardada correctamente');
+
+        // Redirige a Citas y pasa el idSolicitud como parámetro
+        this.router.navigate(['/dashboard/solicitante/citas'], {
+          queryParams: { idSolicitud: res.idSolicitud }
+        });
       },
       error: (err) => {
         console.error('Error guardando solicitud:', err);

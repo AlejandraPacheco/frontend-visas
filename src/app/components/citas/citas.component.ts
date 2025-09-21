@@ -8,6 +8,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { addMinutes, addDays, startOfWeek } from 'date-fns';
 import { CitaDto } from '../../models/CitaDto';
 import { CitaService } from '../../services/cita.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-citas',
@@ -26,6 +27,8 @@ import { CitaService } from '../../services/cita.service';
 export class CitasComponent {
   username: string = localStorage.getItem('username') || 'Solicitante';
 
+  idSolicitud!: number;
+
   // Fecha base para calcular la semana
   viewDate: Date = new Date();
 
@@ -40,9 +43,16 @@ export class CitasComponent {
 
   citasSemana: CitaDto[] = [];
 
-  constructor(private citaService: CitaService) {
+  constructor(private citaService: CitaService, private route: ActivatedRoute) {
     this.generarSemana();
     this.generarHoras();
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.idSolicitud = +params['idSolicitud']; // convertir a número
+      console.log('ID Solicitud recibido:', this.idSolicitud);
+    });
   }
 
   // Genera lunes → viernes según la viewDate
@@ -116,9 +126,9 @@ export class CitasComponent {
   }
 
   confirmarCita() {
-    if (this.slotSeleccionado) {
+    if (this.slotSeleccionado && this.idSolicitud) {
       const dto: CitaDto = {
-        idSolicitud: 12, // ⚠️ aquí pon el ID real de la solicitud del usuario
+        idSolicitud: this.idSolicitud,
         fechaCita: this.slotSeleccionado.dia.toISOString().split('T')[0],
         horaCita: this.slotSeleccionado.hora.split(' - ')[0] // toma hora de inicio
       };
@@ -126,6 +136,8 @@ export class CitasComponent {
       this.citaService.crearCita(dto).subscribe({
         next: (res) => {
           alert(`✅ Cita confirmada: ${dto.fechaCita} a las ${dto.horaCita}`);
+          // Redirigir al dashboard del solicitante
+          window.location.href = '/dashboard-solicitante';
         },
         error: (err) => {
           alert('❌ Error al guardar la cita');
