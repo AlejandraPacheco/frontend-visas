@@ -1,73 +1,97 @@
-/* Fondo de la pantalla */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #74ebd5, #acb6e5);
-    height: 100vh;
+/* Fondo degradado y centrado */
+.login-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    font-family: Arial, sans-serif;
 }
 
-/* Card del login */
-.login-container {
-    background-color: #ffffff;
-    width: 350px;
-    padding: 40px 30px;
+/* Caja del login */
+.login-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    width: 320px;
+    text-align: center;
 }
 
 /* Título */
-.login-container h2 {
-    text-align: center;
-    color: #333;
+.login-box h2 {
     margin-bottom: 25px;
-    font-size: 24px;
+    color: #333;
 }
 
 /* Inputs */
-.login-container input {
-    width: 100%;
-    padding: 12px 15px;
+.input-group {
     margin-bottom: 20px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    transition: all 0.3s ease;
+    text-align: left;
 }
 
-/* Efecto al enfocarse */
-.login-container input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-    outline: none;
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
 }
 
 /* Botón */
-.login-container button {
+button {
+    width: 100%;
     padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: #007bff;
-    color: white;
+    background-color: #2575fc;
+    color: #fff;
     font-size: 16px;
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
-.login-container button:hover {
-    background: #0056b3;
+button:hover {
+    background-color: #1a5ed8;
 }
 
 /* Mensaje de error */
-.login-container p.error {
-    text-align: center;
-    color: #ff4d4f;
+.error-message {
+    color: red;
+    margin-top: 15px;
     font-size: 14px;
-    margin-top: -10px;
-    margin-bottom: 15px;
+}
+
+/* Sección de Crear Cuenta */
+.signup-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.signup-section p {
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 14px;
+}
+
+.signup-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #6a11cb; /* degradado opcional o sólido */
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signup-button:hover {
+    background-color: #520fa2;
 }

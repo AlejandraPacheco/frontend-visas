@@ -15,7 +15,6 @@ export class LoginComponent {
   username = '';
   password = '';
   errorMessage = '';
-
   constructor(private http: HttpClient, private router: Router) {}
 
   login() {
@@ -42,5 +41,9 @@ export class LoginComponent {
         this.errorMessage = 'Error de conexión con el servidor';
       }
     });
+  }
+
+  crearCuenta() {
+    this.router.navigate(['/register']);
   }
 }
