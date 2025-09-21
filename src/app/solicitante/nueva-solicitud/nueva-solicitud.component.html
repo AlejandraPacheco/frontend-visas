@@ -1,0 +1,162 @@
+<div class="dashboard-container">
+    <!-- Sidebar (igual al que ya usas) -->
+    <nav class="sidebar">
+        <div class="logo-section">
+        <img src="../../../assets/pasaporte.png" alt="Logo" class="logo" />
+        <span class="system-name">Visa.ES</span>
+        </div>
+        <hr class="divider" />
+        <ul class="menu">
+        <li routerLinkActive="active"><a routerLink="/dashboard/solicitante/mis-solicitudes">Mis Solicitudes</a></li>
+        <li routerLinkActive="active"><a routerLink="/dashboard/solicitante/mis-citas">Mis Citas</a></li>
+        </ul>
+        <div class="user-section">
+        <span>{{ username }}</span>
+        <button (click)="logout()">Salir</button>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="header">
+        <h1>Nueva Solicitud</h1>
+        </div>
+
+        <form class="solicitud-form" #solForm="ngForm" (ngSubmit)="crearSolicitud()" novalidate>
+        <!-- Sección: Datos personales -->
+    <h2 class="section-title">Datos del solicitante</h2>
+
+    <!-- Fila: Apellido y Nombre -->
+    <div class="form-grid-2">
+    <div class="form-group">
+        <label for="apellido">Apellido(s) *</label>
+        <input id="apellido" name="apellido" type="text" [(ngModel)]="solicitud.apellido" required />
+    </div>
+
+    <div class="form-group">
+        <label for="nombre">Nombre(s) *</label>
+        <input id="nombre" name="nombre" type="text" [(ngModel)]="solicitud.nombre" required />
+    </div>
+    </div>
+
+    <!-- Fila: Fecha de nacimiento, País de nacimiento, Nacionalidad -->
+    <div class="form-grid-3">
+    <div class="form-group">
+        <label for="fechaNacimiento">Fecha de nacimiento *</label>
+        <input id="fechaNacimiento" name="fechaNacimiento" type="date" [(ngModel)]="solicitud.fechaNacimiento" required />
+    </div>
+
+    <div class="form-group">
+    <label for="paisNacimiento">País de nacimiento *</label>
+    <select id="paisNacimiento" name="paisNacimiento" [(ngModel)]="solicitud.paisNacimiento" required>
+        <option value="">-- Seleccionar --</option>
+        <option *ngFor="let pais of paises" [value]="pais.idPais">{{ pais.nombrePais }}</option>
+    </select>
+    </div>
+
+    <div class="form-group">
+        <label for="nacionalidad">Nacionalidad *</label>
+        <input id="nacionalidad" name="nacionalidad" type="text" [(ngModel)]="solicitud.nacionalidad" required />
+    </div>
+    </div>
+
+    <!-- Fila: Sexo y Estado civil -->
+    <div class="form-grid-2">
+        <div class="form-group">
+        <label for="sexo">Sexo *</label>
+        <select id="sexo" name="sexo" [(ngModel)]="solicitud.sexo" required>
+            <option value="">-- Seleccionar --</option>
+            <option *ngFor="let sexo of sexos" [value]="sexo.idSexo">{{ sexo.descripcion }}</option>
+        </select>
+        </div>
+
+            <div class="form-group">
+        <label for="estadoCivil">Estado Civil *</label>
+        <select id="estadoCivil" name="estadoCivil" [(ngModel)]="solicitud.estadoCivil" required>
+            <option value="">-- Seleccionar --</option>
+            <option *ngFor="let estado of estadosCiviles" [value]="estado.idEstadoCivil">{{ estado.descripcion }}</option>
+        </select>
+        </div>
+    </div>
+
+    <!-- Fila: CI y Número de pasaporte -->
+    <div class="form-grid-2">
+    <div class="form-group">
+        <label for="ci">Cédula (CI) *</label>
+        <input id="ci" name="ci" type="text" [(ngModel)]="solicitud.ci" required />
+    </div>
+
+    <div class="form-group">
+        <label for="numPasaporte">Número de pasaporte</label>
+        <input id="numPasaporte" name="numPasaporte" type="text" [(ngModel)]="solicitud.numPasaporte" />
+    </div>
+    </div>
+
+    <!-- Fila: Fecha de expedición, vencimiento y País de expedición -->
+    <div class="form-grid-3">
+        <div class="form-group">
+            <label for="pasaporteFechaExp">Fecha de expedición (pasaporte)</label>
+            <input id="pasaporteFechaExp" name="pasaporteFechaExp" type="date" [(ngModel)]="solicitud.pasaporteFechaExp" />
+        </div>
+
+        <div class="form-group">
+            <label for="pasaporteFechaVen">Fecha de vencimiento (pasaporte)</label>
+            <input id="pasaporteFechaVen" name="pasaporteFechaVen" type="date" [(ngModel)]="solicitud.pasaporteFechaVen" />
+        </div>
+        <div class="form-group">
+        <label for="pasaportePaisExp">Expedido por:</label>
+        <select id="pasaportePaisExp" name="pasaportePaisExp" [(ngModel)]="solicitud.pasaportePaisExp">
+            <option value="">-- Seleccionar --</option>
+            <option *ngFor="let pais of paises" [value]="pais.idPais">{{ pais.nombrePais }}</option>
+        </select>
+        </div>
+    </div>
+
+    <!-- Fila: Profesión -->
+    <div class="form-group">
+        <label for="ocupacion">Ocupación / Profesión</label>
+        <input id="ocupacion" name="ocupacion" type="text" [(ngModel)]="solicitud.ocupacion" />
+    </div>
+
+        <!-- Sección: Datos de la solicitud -->
+        <h2 class="section-title">Datos de la solicitud</h2>
+        <div class="form-grid">
+
+            <div class="form-group full-width">
+                <label>Motivo del viaje *</label>
+                <div class="radio-group">
+                    <label *ngFor="let motivo of motivos">
+                    <input
+                        type="radio"
+                        name="motivo"
+                        [(ngModel)]="solicitud.motivo"
+                        [value]="motivo.descripcion"
+                        required
+                    />
+                    {{ motivo.descripcion }}
+                    </label>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+            <label for="fechaInicio">Fecha inicio prevista *</label>
+            <input id="fechaInicio" name="fechaInicio" type="date" [(ngModel)]="solicitud.fechaInicio" required />
+            </div>
+
+            <div class="form-group">
+            <label for="fechaFin">Fecha fin prevista *</label>
+            <input id="fechaFin" name="fechaFin" type="date" [(ngModel)]="solicitud.fechaFin" required />
+            </div>
+
+        </div>
+
+        <!-- Acciones -->
+        <div class="form-actions">
+            <button type="submit" class="submit-button" [disabled]="!solForm.form.valid">Guardar y Agendar Cita</button>
+            <button type="button" class="cancel-button" (click)="cancelar()">Cancelar</button>
+        </div>
+        </form>
+    </main>
+</div>

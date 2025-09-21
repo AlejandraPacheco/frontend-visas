@@ -1,0 +1,50 @@
+<div class="dashboard-container">
+    <!-- Menu lateral -->
+    <nav class="sidebar">
+        <div class="logo-section">
+        <img src="../../../assets/pasaporte.png" alt="Logo" class="logo" />
+        <span class="system-name">Visa.ES</span>
+        </div>
+        <hr class="divider">
+        <ul class="menu">
+        <li routerLinkActive="active">
+            <a routerLink="/dashboard/solicitante/mis-solicitudes">Mis Solicitudes</a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/dashboard/solicitante/mis-citas">Mis Citas</a>
+        </li>
+        </ul>
+        <div class="user-section">
+        <span>{{ username }}</span>
+        <button (click)="logout()">Salir</button>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="header">
+        <h1>Mis Solicitudes</h1>
+        <button class="add-button" (click)="nuevaSolicitud()">+</button>
+        </div>
+
+        <table class="solicitudes-table">
+        <thead>
+            <tr>
+            <th>Número de Solicitud</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th></th> <!-- columna de botón -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let solicitud of solicitudes">
+            <td>{{ solicitud.idSolicitud }}</td>
+            <td>{{ solicitud.fechaSolicitud | date:'dd/MM/yyyy' }}</td>
+            <td>{{ solicitud.estado }}</td>
+            <td><button (click)="verDetalles(solicitud)">Ver</button></td>
+            </tr>
+        </tbody>
+        </table>
+    </main>
+</div>
+
