@@ -12,7 +12,9 @@ import { DashboardSolicitanteDto } from '../../models/DashboardSolicitanteDto';
   imports: [CommonModule, RouterModule]
 })
 export class SolicitanteComponent implements OnInit {
-  username = 'Usuario'; // luego lo obtendrás del JWT
+  username: string = localStorage.getItem('username') || 'Solicitante';
+
+  //username = 'Usuario'; // luego lo obtendrás del JWT
   solicitudes: DashboardSolicitanteDto[] = [];
 
   constructor(
