@@ -9,6 +9,8 @@ import { SexoDto } from '../../models/SexoDto';
 import { EstadoCivilDto } from '../../models/EstadoCivilDto';
 import { MotivoService } from '../../services/motivo.service';
 import { MotivoDto } from '../../models/MotivoDto';
+import { SolicitudesService } from '../../services/solicitudes.service';
+import { SolicitudDto } from '../../models/SolicitudDto';
 
 @Component({
   selector: 'app-nueva-solicitud',
@@ -19,13 +21,38 @@ import { MotivoDto } from '../../models/MotivoDto';
 })
 export class NuevaSolicitudComponent implements OnInit {
   username: string = localStorage.getItem('username') || 'Solicitante';
-  solicitud: any = {}; // luego defines un DTO
+  solicitud: SolicitudDto = {
+    apellidos: '',
+    nombres: '',
+    fechaNacimiento: '',
+    idPaisDeNacimiento: 0,
+    nacionalidad: '',
+    idSexo: 0,
+    idEstadoCivil: 0,
+    ci: '',
+    numeroPasaporte: '',
+    fechaExpedicionPasaporte: '',
+    fechaVencimientoPasaporte: '',
+    idPaisExpedicionPasaporte: 0,
+    profesion: '',
+    idMotivo: 0,
+    fechaLlegadaSpain: '',
+    fechaSalidaSpain: ''
+  };
   paises: PaisDto[] = [];
   sexos: SexoDto[] = [];
   estadosCiviles: EstadoCivilDto[] = [];
   motivos: MotivoDto[] = [];
+  motivoSeleccionado: string = '';
 
-  constructor(private paisService: PaisService, private sexoService: SexoService, private estadoCivilService: EstadocivilService, private motivoService: MotivoService) {}
+
+  constructor(
+    private paisService: PaisService,
+    private sexoService: SexoService,
+    private estadoCivilService: EstadocivilService,
+    private motivoService: MotivoService,
+    private solicitudesService: SolicitudesService
+  ) {}
 
   ngOnInit(): void {
     this.cargarPaises();
@@ -68,9 +95,40 @@ export class NuevaSolicitudComponent implements OnInit {
 }
 
   crearSolicitud() {
-    console.log('Solicitud creada:', this.solicitud);
-    // aquí llamas al backend
+    // Asignar los IDs de las relaciones a las propiedades del DTO
+    this.solicitud.idPaisDeNacimiento = this.solicitud.idPaisDeNacimiento;
+    this.solicitud.idPaisExpedicionPasaporte = this.solicitud.idPaisExpedicionPasaporte;
+    this.solicitud.idSexo = this.solicitud.idSexo;
+    this.solicitud.idEstadoCivil = this.solicitud.idEstadoCivil;
+
+    this.solicitud.fechaLlegadaSpain = this.solicitud.fechaLlegadaSpain; // ejemplo: hoy
+    this.solicitud.fechaSalidaSpain = this.solicitud.fechaSalidaSpain; // ejemplo: hoy
+
+
+    // Convertir motivo (string) a idMotivo
+    const motivo = this.motivos.find(m => m.descripcion === this.motivoSeleccionado);
+    this.solicitud.idMotivo = motivo ? motivo.idMotivo : undefined;
+
+
+    // Asignar id del usuario logueado
+    this.solicitud.idSolicitante = parseInt(localStorage.getItem('userId') || '0', 10);
+
+    console.log('DTO enviado:', this.solicitud);
+
+    // Llamada al backend
+    this.solicitudesService.crearSolicitud(this.solicitud).subscribe({
+      next: (res) => {
+        console.log('Solicitud guardada:', res);
+        alert('Solicitud guardada correctamente');
+      },
+      error: (err) => {
+        console.error('Error guardando solicitud:', err);
+        alert('Hubo un error al guardar la solicitud');
+      }
+    });
   }
+
+
 
   cancelar() {
     console.log('Cancelado');
