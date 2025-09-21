@@ -43,7 +43,13 @@ export class DetalleSolicitudComponent implements OnInit {
   }
 
   logout() {
+    // Limpiar token y datos del usuario
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('idUsuario');
+
+    // Redirigir a login
     window.location.href = '/login';
   }
 }

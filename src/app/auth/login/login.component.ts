@@ -27,11 +27,14 @@ export class LoginComponent {
           localStorage.setItem('token', res.response.token);
           localStorage.setItem('username', res.response.username);
           localStorage.setItem('rol', res.response.rol);
+          localStorage.setItem('idUsuario', res.response.idUsuario);
           console.log('rol', res.response.rol);
           console.log('Response:', res);
           // Redirigir según el rol
           if (res.response.rol === 'Solicitante') {
             this.router.navigate(['/dashboard-solicitante']);
+          } else if (res.response.rol === 'Funcionario Consular') {
+            this.router.navigate(['/dashboard/funcionario-consular']);
           } else {
             this.router.navigate(['/user']);
           }

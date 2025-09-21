@@ -5,13 +5,13 @@ import { SolicitudesService} from '../../services/solicitudes.service'; // impor
 import { DashboardSolicitanteDto } from '../../models/DashboardSolicitanteDto';
 
 @Component({
-  selector: 'app-solicitante',
+  selector: 'app-funcionario-consular',
   standalone: true,
-  templateUrl: './solicitante.component.html',
-  styleUrls: ['./solicitante.component.css'],
-  imports: [CommonModule, RouterModule]
+  imports: [CommonModule, RouterModule],
+  templateUrl: './funcionario-consular.component.html',
+  styleUrl: './funcionario-consular.component.css'
 })
-export class SolicitanteComponent implements OnInit {
+export class FuncionarioConsularComponent {
   username: string = localStorage.getItem('username') || 'Solicitante';
 
   //username = 'Usuario'; // luego lo obtendrás del JWT
@@ -23,14 +23,7 @@ export class SolicitanteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener el idUsuario real desde localStorage
-  const idUsuarioStr = localStorage.getItem('idUsuario'); 
-    if (!idUsuarioStr) {
-      console.error('No se encontró el idUsuario en localStorage');
-      return;
-    }
-
-  const idUsuario = Number(idUsuarioStr); // convertir a number
+    const idUsuario = 1; // aquí luego pones el ID real desde JWT o localStorage
     this.solicitudesService.getSolicitudesByUsuario(idUsuario).subscribe({
       next: (data) => {
         this.solicitudes = data;
@@ -57,7 +50,6 @@ export class SolicitanteComponent implements OnInit {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('rol');
-    localStorage.removeItem('idUsuario');
 
     // Redirigir a login
     window.location.href = '/login';

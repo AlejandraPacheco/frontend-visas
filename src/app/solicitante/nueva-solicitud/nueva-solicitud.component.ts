@@ -142,8 +142,13 @@ export class NuevaSolicitudComponent implements OnInit {
   }
 
   logout() {
+    // Limpiar token y datos del usuario
     localStorage.removeItem('token');
-    // rediriges al login
+    localStorage.removeItem('username');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('idUsuario');
+
+    // Redirigir a login
     window.location.href = '/login';
   }
 }
