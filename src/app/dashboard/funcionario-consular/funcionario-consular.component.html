@@ -24,6 +24,13 @@
     <main class="main-content">
         <div class="header">
         <h1>Solicitudes recibidas</h1>
+
+        <mat-form-field appearance="outline" class="busqueda-ci">
+            <mat-label>Buscar por C.I.</mat-label>
+            <input matInput [(ngModel)]="filtroCI" placeholder="Ej: 12345678">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
         </div>
 
         <table class="solicitudes-table">
@@ -38,7 +45,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let solicitud of solicitudes">
+            <tr *ngFor="let solicitud of solicitudes | filtroPorCI:filtroCI">
             <td>{{ solicitud.idSolicitud }}</td>
             <td>{{ solicitud.nombres }}</td>
             <td>{{ solicitud.apellidos }}</td>

@@ -137,3 +137,10 @@
 .solicitudes-table button:hover {
   background-color: #6a11cb;
 }
+
+.busqueda-ci {
+  width: 300px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
