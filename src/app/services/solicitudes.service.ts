@@ -35,4 +35,9 @@ export class SolicitudesService {
     return this.http.get<SolicitudDto>(`${this.apiUrl}/funcionario/${idSolicitud}`);
   }
 
+  actualizarSolicitudFuncionario(idSolicitud: number, solicitud: SolicitudDto): Observable<SolicitudDto> {
+    return this.http.put<SolicitudDto>(`${this.apiUrl}/funcionario/${idSolicitud}`, solicitud);
+  }
+
+
 }

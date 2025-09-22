@@ -28,7 +28,7 @@
         <h1>Detalle Solicitud</h1>
         </div>
 
-        <form class="solicitud-form" #solForm="ngForm" (ngSubmit)="crearSolicitud()" novalidate>
+        <form class="solicitud-form" (ngSubmit)="actualizarSolicitud()" #solForm="ngForm" novalidate>
 
 
         <!-- Sección: Datos personales -->
@@ -169,7 +169,7 @@
 
         <!-- Acciones -->
         <div class="form-actions">
-            <button type="submit" class="submit-button" [disabled]="!solForm.form.valid">Guardar y Agendar Cita</button>
+            <button type="submit" class="submit-button" [disabled]="!solForm.form.valid">Guardar solicitud</button>
             <button type="button" class="cancel-button" (click)="cancelar()">Cancelar</button>
         </div>
         </form>

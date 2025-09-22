@@ -134,6 +134,29 @@ export class VerSolicitudComponent implements OnInit {
     });
   }
 
+  actualizarSolicitud() {
+  const motivo = this.motivos.find(m => m.descripcion === this.motivoSeleccionado);
+  this.solicitud.idMotivo = motivo ? motivo.idMotivo : undefined;
+
+  // Asignar la foto seleccionada (Base64)
+  if (this.fotoSeleccionada) {
+    this.solicitud.fotografiaBase64 = this.fotoSeleccionada.toString();
+  }
+
+  this.solicitudesService.actualizarSolicitudFuncionario(this.solicitud.idSolicitud!, this.solicitud)
+    .subscribe({
+      next: res => {
+        alert('Solicitud actualizada correctamente');
+        this.router.navigate(['/dashboard/funcionario-consular']);
+      },
+      error: err => {
+        console.error('Error actualizando solicitud:', err);
+        alert('Hubo un error al actualizar la solicitud');
+      }
+    });
+}
+
+
   cancelar() {
     this.router.navigate(['/dashboard/funcionario-consular']);
   }
