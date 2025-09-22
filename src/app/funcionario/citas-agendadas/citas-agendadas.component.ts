@@ -114,6 +114,16 @@ export class CitasAgendadasComponent {
     this.generarSemana();
   }
 
+  funcionarioSolicitudes() {
+    // Lógica para redirigir a la página de solicitudes
+    window.location.href = '/dashboard/funcionario-consular';
+  }
+
+  funcionarioCitasAgendadas() {
+    // Lógica para redirigir a la página de citas agendadas
+    window.location.href = '/dashboard/funcionario-consular/citas-agendadas';
+  }
+
   logout() {
     localStorage.clear();
     window.location.href = '/login';

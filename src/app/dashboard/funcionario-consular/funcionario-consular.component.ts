@@ -34,7 +34,7 @@ export class FuncionarioConsularComponent implements OnInit {
   }
 
   verDetalle(idSolicitud: number) {
-    this.router.navigate(['/dashboard/funcionario/detalle-solicitud'], {
+    this.router.navigate(['/dashboard/funcionario-consular/ver-solicitud'], {
       queryParams: { idSolicitud }
     });
   }

@@ -6,26 +6,26 @@
         <span class="system-name">Visa.ES</span>
         </div>
         <hr class="divider" />
-
+        
         <div class="menu">
-            <button class="menu-button" (click)="misSolicitudes()">
-                Mis Solicitudes
-            </button>
-            <button class="menu-button" (click)="misCitas()">
-                Mis Citas
-            </button>
-            
+        <button class="menu-button" (click)="funcionarioSolicitudes()">
+            Solicitudes
+        </button>
+        <button class="menu-button" (click)="funcionarioCitasAgendadas()">
+            Citas Asignadas
+        </button>
         </div>
+
         <div class="user-section">
-            <span>{{ username }}</span>
-            <button (click)="logout()">Salir</button>
+        <span>{{ username }}</span>
+        <button (click)="logout()">Salir</button>
         </div>
     </nav>
 
     <!-- Contenido principal -->
     <main class="main-content">
         <div class="header">
-        <h1>Nueva Solicitud</h1>
+        <h1>Detalle Solicitud</h1>
         </div>
 
         <form class="solicitud-form" #solForm="ngForm" (ngSubmit)="crearSolicitud()" novalidate>

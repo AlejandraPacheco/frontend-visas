@@ -14,13 +14,13 @@ import { SolicitudDto } from '../../models/SolicitudDto';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-nueva-solicitud',
+  selector: 'app-ver-solicitud',
   standalone: true,
   imports: [CommonModule, FormsModule, NgForOf],
-  templateUrl: './nueva-solicitud.component.html',
-  styleUrls: ['./nueva-solicitud.component.css']
+  templateUrl: './ver-solicitud.component.html',
+  styleUrl: './ver-solicitud.component.css'
 })
-export class NuevaSolicitudComponent implements OnInit {
+export class VerSolicitudComponent implements OnInit {
   username: string = localStorage.getItem('username') || 'Solicitante';
   solicitud: SolicitudDto = {
     apellidos: '',
@@ -135,12 +135,14 @@ export class NuevaSolicitudComponent implements OnInit {
     });
   }
 
-  misCitas() {
-    this.router.navigate(['/']);
+    funcionarioSolicitudes() {
+    // Lógica para redirigir a la página de solicitudes
+    window.location.href = '/dashboard/funcionario-consular';
   }
 
-  misSolicitudes() {
-    this.router.navigate(['/dashboard-solicitante']);
+  funcionarioCitasAgendadas() {
+    // Lógica para redirigir a la página de citas agendadas
+    window.location.href = '/dashboard/funcionario-consular/citas-agendadas';
   }
 
   cancelar() {
@@ -158,4 +160,5 @@ export class NuevaSolicitudComponent implements OnInit {
     window.location.href = '/login';
   }
 }
+
 
