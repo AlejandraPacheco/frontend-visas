@@ -3,4 +3,5 @@ export interface CitaDto {
     idSolicitud: number;
     fechaCita: string; // "2025-09-22"
     horaCita: string;  // "08:30"
+    nombreCompleto?: string; 
 }

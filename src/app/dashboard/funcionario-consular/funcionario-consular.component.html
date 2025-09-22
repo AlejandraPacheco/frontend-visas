@@ -5,13 +5,13 @@
         <img src="../../../assets/pasaporte.png" alt="Logo" class="logo" />
         <span class="system-name">Visa.ES</span>
         </div>
-        <hr class="divider">
+        <hr class="divider" />
         <ul class="menu">
         <li routerLinkActive="active">
-            <a routerLink="/dashboard/solicitante/mis-solicitudes">Mis Solicitudes</a>
+            <a routerLink="/dashboard/funcionario-consular">Solicitudes</a>
         </li>
         <li routerLinkActive="active">
-            <a routerLink="/dashboard/solicitante/mis-citas">Mis Citas</a>
+            <a routerLink="/dashboard/funcionario-consular/citas-agendadas">Citas Asignadas</a>
         </li>
         </ul>
         <div class="user-section">
@@ -23,28 +23,32 @@
     <!-- Contenido principal -->
     <main class="main-content">
         <div class="header">
-        <h1>Mis Solicitudes</h1>
-        <button class="add-button" (click)="nuevaSolicitud()">+</button>
+        <h1>Solicitudes recibidas</h1>
         </div>
 
         <table class="solicitudes-table">
         <thead>
             <tr>
-            <th>Número de Solicitud</th>
-            <th>Fecha</th>
-            <th>Estado</th>
-            <th></th> <!-- columna de botón -->
+            <th>Número</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>C.I.</th>
+            <th>Fecha Solicitud</th>
+            <th></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let solicitud of solicitudes">
             <td>{{ solicitud.idSolicitud }}</td>
-            <td>{{ solicitud.fechaSolicitud | date:'dd/MM/yyyy' }}</td>
-            <td>{{ solicitud.estado }}</td>
-            <td><button (click)="verDetalle(solicitud.idSolicitud)">Ver</button></td>
+            <td>{{ solicitud.nombres }}</td>
+            <td>{{ solicitud.apellidos }}</td>
+            <td>{{ solicitud.ci }}</td>
+            <td>{{ solicitud.fechaSolicitud | date: 'dd/MM/yyyy' }}</td>
+            <td>
+                <button (click)="verDetalle(solicitud.idSolicitud)">Ver</button>
+            </td>
             </tr>
         </tbody>
         </table>
     </main>
 </div>
-

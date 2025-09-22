@@ -23,7 +23,11 @@ export class SolicitudesService {
   }
 
   getDetalleSolicitud(idSolicitud: number) {
-  return this.http.get<DetalleSolicitudDto>(`${this.apiUrl}/${idSolicitud}`);
-}
+    return this.http.get<DetalleSolicitudDto>(`${this.apiUrl}/${idSolicitud}`);
+  }
+
+  getTodasSolicitudes() {
+    return this.http.get<DetalleSolicitudDto[]>(`${this.apiUrl}/`);
+  }
 
 }
