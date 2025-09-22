@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaisService } from '../../services/pais.service';
-import { PaisDto } from '../../models/PaisDto';
 import { SexoService } from '../../services/sexo.service';
 import { EstadocivilService } from '../../services/estadocivil.service';
+import { MotivoService } from '../../services/motivo.service';
+import { SolicitudesService } from '../../services/solicitudes.service';
+import { PaisDto } from '../../models/PaisDto';
 import { SexoDto } from '../../models/SexoDto';
 import { EstadoCivilDto } from '../../models/EstadoCivilDto';
-import { MotivoService } from '../../services/motivo.service';
 import { MotivoDto } from '../../models/MotivoDto';
-import { SolicitudesService } from '../../services/solicitudes.service';
 import { SolicitudDto } from '../../models/SolicitudDto';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ver-solicitud',
@@ -21,35 +21,18 @@ import { Router } from '@angular/router';
   styleUrl: './ver-solicitud.component.css'
 })
 export class VerSolicitudComponent implements OnInit {
-  username: string = localStorage.getItem('username') || 'Solicitante';
-  solicitud: SolicitudDto = {
-    apellidos: '',
-    nombres: '',
-    fechaNacimiento: '',
-    idPaisDeNacimiento: 0,
-    nacionalidad: '',
-    idSexo: 0,
-    idEstadoCivil: 0,
-    ci: '',
-    numeroPasaporte: '',
-    fechaExpedicionPasaporte: '',
-    fechaVencimientoPasaporte: '',
-    idPaisExpedicionPasaporte: 0,
-    profesion: '',
-    idMotivo: 0,
-    fechaLlegadaSpain: '',
-    fechaSalidaSpain: ''
-  };
+  username: string = localStorage.getItem('username') || 'Funcionario';
+  
+  solicitud: SolicitudDto = new SolicitudDto();
   paises: PaisDto[] = [];
   sexos: SexoDto[] = [];
   estadosCiviles: EstadoCivilDto[] = [];
   motivos: MotivoDto[] = [];
   motivoSeleccionado: string = '';
-
   fotoSeleccionada: string | ArrayBuffer | null = null;
-  archivoFoto: File | null = null;
 
   constructor(
+    private route: ActivatedRoute,
     private paisService: PaisService,
     private sexoService: SexoService,
     private estadoCivilService: EstadocivilService,
@@ -63,72 +46,86 @@ export class VerSolicitudComponent implements OnInit {
     this.cargarSexos();
     this.cargarEstadosCiviles();
     this.cargarMotivos();
-  }
 
-  cargarPaises() {
-    this.paisService.getPaises().subscribe({
-      next: (data) => {
-        this.paises = data;
-      },
-      error: (err) => {
-        console.error('Error cargando países:', err);
+    this.route.queryParams.subscribe(params => {
+      const idSolicitud = +params['idSolicitud'];
+      if (idSolicitud) {
+        this.cargarSolicitud(idSolicitud);
       }
     });
   }
 
-  
+  cargarPaises() {
+    this.paisService.getPaises().subscribe({
+      next: (data) => (this.paises = data),
+      error: (err) => console.error('Error cargando países:', err)
+    });
+  }
+
   cargarSexos() {
     this.sexoService.getSexos().subscribe({
-      next: (data) => this.sexos = data,
+      next: (data) => (this.sexos = data),
       error: (err) => console.error('Error cargando sexos:', err)
     });
   }
 
   cargarEstadosCiviles() {
     this.estadoCivilService.getEstadosCiviles().subscribe({
-      next: (data) => this.estadosCiviles = data,
+      next: (data) => (this.estadosCiviles = data),
       error: (err) => console.error('Error cargando estados civiles:', err)
     });
   }
 
   cargarMotivos() {
-  this.motivoService.getMotivos().subscribe({
-    next: (data) => this.motivos = data,
-    error: (err) => console.error('Error cargando motivos:', err)
-  });
-}
+    this.motivoService.getMotivos().subscribe({
+      next: (data) => (this.motivos = data),
+      error: (err) => console.error('Error cargando motivos:', err)
+    });
+  }
+
+  cargarSolicitud(idSolicitud: number) {
+    this.solicitudesService.getDetalleSolicitudFuncionario(idSolicitud).subscribe({
+      next: (data: SolicitudDto) => {
+        this.solicitud = data;
+
+        // Convertir idMotivo a motivoSeleccionado (string)
+        this.motivoSeleccionado = this.motivos.find(m => m.idMotivo === data.idMotivo)?.descripcion || '';
+
+        // Cargar foto si existe
+        if (data.fotografiaBase64) {
+          this.fotoSeleccionada = data.fotografiaBase64;
+        }
+      },
+      error: (err) => console.error('Error cargando solicitud:', err)
+    });
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.fotoSeleccionada = reader.result;
+        this.solicitud.fotografiaBase64 = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
   crearSolicitud() {
-    // Asignar los IDs de las relaciones a las propiedades del DTO
-    this.solicitud.idPaisDeNacimiento = this.solicitud.idPaisDeNacimiento;
-    this.solicitud.idPaisExpedicionPasaporte = this.solicitud.idPaisExpedicionPasaporte;
-    this.solicitud.idSexo = this.solicitud.idSexo;
-    this.solicitud.idEstadoCivil = this.solicitud.idEstadoCivil;
-
-    this.solicitud.fechaLlegadaSpain = this.solicitud.fechaLlegadaSpain; // ejemplo: hoy
-    this.solicitud.fechaSalidaSpain = this.solicitud.fechaSalidaSpain; // ejemplo: hoy
-
-
-    // Convertir motivo (string) a idMotivo
+    // Convertir motivo seleccionado a idMotivo
     const motivo = this.motivos.find(m => m.descripcion === this.motivoSeleccionado);
-    this.solicitud.idMotivo = motivo ? motivo.idMotivo : undefined;
-
+    this.solicitud.idMotivo = motivo?.idMotivo;
 
     // Asignar id del usuario logueado
     this.solicitud.idSolicitante = parseInt(localStorage.getItem('idUsuario') || '0', 10);
 
     console.log('DTO enviado:', this.solicitud);
 
-    // Llamada al backend
     this.solicitudesService.crearSolicitud(this.solicitud).subscribe({
-      next: (res) => {
-        console.log('Solicitud guardada:', res);
+      next: () => {
         alert('Solicitud guardada correctamente');
-
-        // Redirige a Citas y pasa el idSolicitud como parámetro
-        this.router.navigate(['/dashboard/solicitante/citas'], {
-          queryParams: { idSolicitud: res.idSolicitud }
-        });
+        this.router.navigate(['/dashboard/funcionario-consular']);
       },
       error: (err) => {
         console.error('Error guardando solicitud:', err);
@@ -137,41 +134,24 @@ export class VerSolicitudComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: any) {
-  const file: File = event.target.files[0];
-  if (file) {
-    this.archivoFoto = file;
-
-    const reader = new FileReader();
-    reader.onload = e => this.fotoSeleccionada = reader.result;
-    reader.readAsDataURL(file);
+  cancelar() {
+    this.router.navigate(['/dashboard/funcionario-consular']);
   }
-}
 
-  funcionarioSolicitudes() {
-    // Lógica para redirigir a la página de solicitudes
+    funcionarioSolicitudes() {
     window.location.href = '/dashboard/funcionario-consular';
   }
 
   funcionarioCitasAgendadas() {
-    // Lógica para redirigir a la página de citas agendadas
     window.location.href = '/dashboard/funcionario-consular/citas-agendadas';
   }
 
-  cancelar() {
-    console.log('Cancelado');
-  }
-
   logout() {
-    // Limpiar token y datos del usuario
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('idUsuario');
-
-    // Redirigir a login
+    localStorage.clear();
     window.location.href = '/login';
   }
 }
+
+
 
 

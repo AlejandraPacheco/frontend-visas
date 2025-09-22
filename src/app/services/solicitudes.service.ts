@@ -30,4 +30,9 @@ export class SolicitudesService {
     return this.http.get<DetalleSolicitudDto[]>(`${this.apiUrl}/`);
   }
 
+  // Nueva función para el funcionario (con idMotivo y fotografiaBase64)
+  getDetalleSolicitudFuncionario(idSolicitud: number): Observable<SolicitudDto> {
+    return this.http.get<SolicitudDto>(`${this.apiUrl}/funcionario/${idSolicitud}`);
+  }
+
 }
