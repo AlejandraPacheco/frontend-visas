@@ -39,5 +39,8 @@ export class SolicitudesService {
     return this.http.put<SolicitudDto>(`${this.apiUrl}/funcionario/${idSolicitud}`, solicitud);
   }
 
+  getFotoSolicitud(idSolicitud: number): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/foto/${idSolicitud}`, { responseType: 'blob' });
+  }
 
 }

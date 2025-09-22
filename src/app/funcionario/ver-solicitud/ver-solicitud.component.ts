@@ -12,11 +12,12 @@ import { SexoDto } from '../../models/SexoDto';
 import { EstadoCivilDto } from '../../models/EstadoCivilDto';
 import { MotivoDto } from '../../models/MotivoDto';
 import { SolicitudDto } from '../../models/SolicitudDto';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-ver-solicitud',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgForOf],
+  imports: [CommonModule, FormsModule, NgForOf, MatIconModule],
   templateUrl: './ver-solicitud.component.html',
   styleUrl: './ver-solicitud.component.css'
 })
@@ -91,10 +92,8 @@ export class VerSolicitudComponent implements OnInit {
         // Convertir idMotivo a motivoSeleccionado (string)
         this.motivoSeleccionado = this.motivos.find(m => m.idMotivo === data.idMotivo)?.descripcion || '';
 
-        // Cargar foto si existe
-        if (data.fotografiaBase64) {
-          this.fotoSeleccionada = data.fotografiaBase64;
-        }
+          // Cargar foto con el nuevo endpoint
+          this.cargarFoto(idSolicitud);
       },
       error: (err) => console.error('Error cargando solicitud:', err)
     });
@@ -135,27 +134,46 @@ export class VerSolicitudComponent implements OnInit {
   }
 
   actualizarSolicitud() {
-  const motivo = this.motivos.find(m => m.descripcion === this.motivoSeleccionado);
-  this.solicitud.idMotivo = motivo ? motivo.idMotivo : undefined;
+    const motivo = this.motivos.find(m => m.descripcion === this.motivoSeleccionado);
+    this.solicitud.idMotivo = motivo ? motivo.idMotivo : undefined;
 
-  // Asignar la foto seleccionada (Base64)
-  if (this.fotoSeleccionada) {
-    this.solicitud.fotografiaBase64 = this.fotoSeleccionada.toString();
+    // Asignar la foto seleccionada (Base64)
+    if (this.fotoSeleccionada) {
+      this.solicitud.fotografiaBase64 = this.fotoSeleccionada.toString();
+    }
+
+    this.solicitudesService.actualizarSolicitudFuncionario(this.solicitud.idSolicitud!, this.solicitud)
+      .subscribe({
+        next: res => {
+          alert('Solicitud actualizada correctamente');
+          this.router.navigate(['/dashboard/funcionario-consular']);
+        },
+        error: err => {
+          console.error('Error actualizando solicitud:', err);
+          alert('Hubo un error al actualizar la solicitud');
+        }
+      });
   }
 
-  this.solicitudesService.actualizarSolicitudFuncionario(this.solicitud.idSolicitud!, this.solicitud)
-    .subscribe({
-      next: res => {
-        alert('Solicitud actualizada correctamente');
-        this.router.navigate(['/dashboard/funcionario-consular']);
+  cargarFoto(idSolicitud: number) {
+    this.solicitudesService.getFotoSolicitud(idSolicitud).subscribe({
+      next: (blob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.fotoSeleccionada = reader.result as string; // base64 para el <img>
+        };
+        reader.readAsDataURL(blob);
       },
-      error: err => {
-        console.error('Error actualizando solicitud:', err);
-        alert('Hubo un error al actualizar la solicitud');
+      error: () => {
+        this.fotoSeleccionada = ''; // no hay foto
       }
     });
 }
 
+eliminarFoto() {
+  this.fotoSeleccionada = null;
+  this.solicitud.fotografiaBase64 = undefined; // o '' según como lo manejes en backend
+}
 
   cancelar() {
     this.router.navigate(['/dashboard/funcionario-consular']);

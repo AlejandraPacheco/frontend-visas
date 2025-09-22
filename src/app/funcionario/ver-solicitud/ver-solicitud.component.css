@@ -345,6 +345,58 @@ margin-bottom: 12px;
   object-fit: cover;
 }
 
+.foto-solicitante {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.foto-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+}
+
+.upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-box img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.btn-delete mat-icon {
+  color: red;
+  font-size: 28px; /* opcional, para hacerlo más grande */
+}
+
+.btn-delete {
+  min-width: auto;
+  padding: 0;
+}
+.delete-icon {
+  color: red;
+  cursor: pointer;
+  font-size: 28px;
+}
+
+
+
+
 
 
 
