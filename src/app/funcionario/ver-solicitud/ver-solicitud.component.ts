@@ -46,6 +46,8 @@ export class VerSolicitudComponent implements OnInit {
   motivos: MotivoDto[] = [];
   motivoSeleccionado: string = '';
 
+  fotoSeleccionada: string | ArrayBuffer | null = null;
+  archivoFoto: File | null = null;
 
   constructor(
     private paisService: PaisService,
@@ -135,7 +137,18 @@ export class VerSolicitudComponent implements OnInit {
     });
   }
 
-    funcionarioSolicitudes() {
+  onFileSelected(event: any) {
+  const file: File = event.target.files[0];
+  if (file) {
+    this.archivoFoto = file;
+
+    const reader = new FileReader();
+    reader.onload = e => this.fotoSeleccionada = reader.result;
+    reader.readAsDataURL(file);
+  }
+}
+
+  funcionarioSolicitudes() {
     // Lógica para redirigir a la página de solicitudes
     window.location.href = '/dashboard/funcionario-consular';
   }

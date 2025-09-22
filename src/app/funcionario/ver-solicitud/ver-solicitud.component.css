@@ -315,3 +315,37 @@ margin-bottom: 12px;
   font-size: 20px;
 }
 
+
+.foto-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr 180px; /* Ajusta el tamaño del cuadro de foto aquí */
+  gap: 15px;
+  align-items: center; /* Centra verticalmente los 3 elementos de la fila */
+}
+
+.foto-solicitante .upload-box {
+  width: 180px; /* ancho del cuadrado */
+  height: 180px; /* alto del cuadrado, mismo que el ancho */
+  border: 2px dashed #6a11cb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #6a11cb;
+  background-color: #fafafa;
+  overflow: hidden;
+}
+
+.foto-solicitante .upload-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
+
+
