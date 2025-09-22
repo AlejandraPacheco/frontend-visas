@@ -49,6 +49,6 @@ export class LoginComponent {
   }
 
   crearCuenta() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/registro-solicitante']);
   }
 }

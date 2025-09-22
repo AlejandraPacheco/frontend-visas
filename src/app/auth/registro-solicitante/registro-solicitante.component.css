@@ -1,0 +1,179 @@
+/* Igual que antes para el contenedor */
+/* Fondo degradado */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* el form no queda pegado al centro vertical */
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  font-family: Arial, sans-serif;
+  padding: 60px 20px; /* espacio arriba y abajo */
+  overflow-y: auto;   /* permite scroll si el form es muy largo */
+}
+
+/* Caja del registro */
+.register-box {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  width: 700px;      /* más ancho */
+  max-width: 90%;    /* adaptable en pantallas pequeñas */
+}
+
+.register-box h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Secciones */
+.section-title {
+  margin: 20px 0 10px 0;
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+  border-left: 4px solid #6a11cb;
+  padding-left: 8px;
+}
+
+/* Grilla de 2 columnas */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.input-group.full-width {
+  grid-column: 1 / -1; /* ocupa las 2 columnas */
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 6px;
+  color: #555;
+  font-size: 14px;
+}
+
+.input-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Botón principal */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2575fc;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1a5ed8;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Mensajes */
+.error-message {
+  color: red;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.success-message {
+  color: green;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+/* Sección de volver al login */
+.login-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login-section p {
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 14px;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #6a11cb;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #520fa2;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.input-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.section-title {
+  margin: 20px 0 10px 0;
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+  border-left: 4px solid #6a11cb;
+  padding-left: 8px;
+}
+
+/* Inputs y selects iguales */
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #fff;
+  outline: none;
+  box-sizing: border-box;
+  appearance: none;      /* quita estilos nativos */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 10px;
+}
+
+/* Opcional: agregar un ícono de flecha */
+.input-group select {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px 16px;
+  padding-right: 30px; /* espacio para la flecha */
+}
+
+

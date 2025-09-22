@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
+import { RegistroSolicitanteComponent } from './auth/registro-solicitante/registro-solicitante.component';
 import { SolicitanteComponent } from './dashboard/solicitante/solicitante.component';
 import { NuevaSolicitudComponent } from './solicitante/nueva-solicitud/nueva-solicitud.component';
 import { CitasComponent } from './components/citas/citas.component';
@@ -14,6 +15,7 @@ import { ReporteComponent } from './administrador/reporte/reporte.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
+    { path: 'registro-solicitante', component: RegistroSolicitanteComponent },
     { path: 'dashboard-solicitante', component: SolicitanteComponent },
     { path: 'dashboard/solicitante/nueva-solicitud', component: NuevaSolicitudComponent },
     { path: 'dashboard/solicitante/citas', component: CitasComponent },

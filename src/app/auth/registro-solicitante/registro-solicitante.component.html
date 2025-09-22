@@ -1,0 +1,86 @@
+<div class="register-container">
+    <div class="register-box">
+        <h2>Registro de Solicitante</h2>
+
+        <form #regForm="ngForm" (ngSubmit)="registrarSolicitante()" novalidate>
+        
+        <!-- Sección: Información Personal -->
+        <h3 class="section-title">1. Información Personal</h3>
+        <div class="form-grid-2">
+            <div class="input-group">
+            <label for="nombres">Nombres *</label>
+            <input id="nombres" type="text" name="nombres" [(ngModel)]="solicitante.nombres" required />
+            </div>
+
+            <div class="input-group">
+            <label for="apellidos">Apellidos *</label>
+            <input id="apellidos" type="text" name="apellidos" [(ngModel)]="solicitante.apellidos" required />
+            </div>
+        </div>
+        
+
+            <div class="input-group">
+            <label for="email">Correo electrónico *</label>
+            <input id="email" type="email" name="email" [(ngModel)]="solicitante.email" required />
+            </div>
+
+        <div class="form-grid-2">
+            <div class="input-group">
+            <label for="ci">Número de C.I. *</label>
+            <input id="ci" type="text" name="ci" [(ngModel)]="solicitante.ci" required />
+            </div>
+
+            <div class="input-group">
+            <label for="celular">Celular</label>
+            <input id="celular" type="tel" name="celular" [(ngModel)]="solicitante.celular" />
+            </div>
+        </div>
+        <div class="form-grid-2">
+
+            <div class="input-group">
+            <label for="ciudad">Ciudad *</label>
+            <select id="ciudad" name="ciudad" [(ngModel)]="solicitante.ciudad" required>
+                <option value="">-- Seleccionar --</option>
+                <option value="La Paz">La Paz</option>
+                <option value="Santa Cruz">Santa Cruz</option>
+                <option value="Cochabamba">Cochabamba</option>
+            </select>
+            </div>
+
+            <div class="input-group">
+            <label for="fechaNacimiento">Fecha de nacimiento *</label>
+            <input id="fechaNacimiento" type="date" name="fechaNacimiento" [(ngModel)]="solicitante.fechaNacimiento" required />
+            </div>
+        </div>
+
+        <!-- Sección: Datos de Acceso -->
+        <h3 class="section-title">2. Datos de Acceso</h3>
+        <div class="form-grid-2">
+            <div class="input-group full-width">
+            <label for="usuario">Usuario *</label>
+            <input id="usuario" type="text" name="usuario" [(ngModel)]="solicitante.usuario" required />
+            </div>
+
+            <div class="input-group">
+            <label for="password">Contraseña *</label>
+            <input id="password" type="password" name="password" [(ngModel)]="solicitante.password" required />
+            </div>
+
+            <div class="input-group">
+            <label for="confirmPassword">Confirmar Contraseña *</label>
+            <input id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="solicitante.confirmPassword" required />
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="!regForm.form.valid">Registrar</button>
+        </form>
+
+        <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
+
+        <div class="login-section">
+        <p>¿Ya tienes una cuenta?</p>
+        <button class="login-button" (click)="irLogin()">Iniciar Sesión</button>
+        </div>
+    </div>
+</div>
