@@ -35,8 +35,8 @@ export class LoginComponent {
             this.router.navigate(['/dashboard-solicitante']);
           } else if (res.response.rol === 'Funcionario Consular') {
             this.router.navigate(['/dashboard/funcionario-consular']);
-          } else {
-            this.router.navigate(['/user']);
+          } else if (res.response.rol === 'Administrador') {
+            this.router.navigate(['/dashboard/administrador']);
           }
         } else {
           this.errorMessage = res.errorMessage;

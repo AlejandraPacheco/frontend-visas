@@ -1,1 +1,64 @@
-<p>administrador works!</p>
+<div class="dashboard-container">
+    <!-- Menu lateral -->
+    <nav class="sidebar">
+        <div class="logo-section">
+        <img src="../../../assets/pasaporte.png" alt="Logo" class="logo" />
+        <span class="system-name">Visa.ES</span>
+        </div>
+        <hr class="divider" />
+        <ul class="menu">
+        <li routerLinkActive="active">
+            <a routerLink="/dashboard/administrador">Solicitudes</a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/dashboard/administrador/citas-agendadas">Citas Asignadas</a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/dashboard/administrador/reporte">Reporte</a>
+        </li>
+        </ul>
+        <div class="user-section">
+        <span>{{ username }}</span>
+        <button (click)="logout()">Salir</button>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="header">
+        <h1>Solicitudes recibidas</h1>
+
+        <mat-form-field appearance="outline" class="busqueda-ci">
+            <mat-label>Buscar por C.I.</mat-label>
+            <input matInput [(ngModel)]="filtroCI" placeholder="Ej: 12345678">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        </div>
+
+        <table class="solicitudes-table">
+        <thead>
+            <tr>
+            <th>Número</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>C.I.</th>
+            <th>Fecha Solicitud</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let solicitud of solicitudes | filtroPorCI:filtroCI">
+            <td>{{ solicitud.idSolicitud }}</td>
+            <td>{{ solicitud.nombres }}</td>
+            <td>{{ solicitud.apellidos }}</td>
+            <td>{{ solicitud.ci }}</td>
+            <td>{{ solicitud.fechaSolicitud | date: 'dd/MM/yyyy' }}</td>
+            <td>
+                <button (click)="verDetalleAdmin(solicitud.idSolicitud)">Ver</button>
+            </td>
+            </tr>
+        </tbody>
+        </table>
+    </main>
+</div>

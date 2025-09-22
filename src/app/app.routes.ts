@@ -7,6 +7,10 @@ import { DetalleSolicitudComponent } from './solicitante/detalle-solicitud/detal
 import { FuncionarioConsularComponent } from './dashboard/funcionario-consular/funcionario-consular.component';
 import { CitasAgendadasComponent } from './funcionario/citas-agendadas/citas-agendadas.component';
 import { VerSolicitudComponent } from './funcionario/ver-solicitud/ver-solicitud.component';
+import { AdministradorComponent } from './dashboard/administrador/administrador.component';
+import { VerSolicitudAdministradorComponent } from './administrador/ver-solicitud-administrador/ver-solicitud-administrador.component';
+import { CitasAgendadasAdministradorComponent } from './administrador/citas-agendadas-administrador/citas-agendadas-administrador.component';
+import { ReporteComponent } from './administrador/reporte/reporte.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -17,6 +21,10 @@ export const routes: Routes = [
     { path: 'dashboard/funcionario-consular', component: FuncionarioConsularComponent },
     { path: 'dashboard/funcionario-consular/citas-agendadas', component: CitasAgendadasComponent },
     { path: 'dashboard/funcionario-consular/ver-solicitud', component: VerSolicitudComponent },
+    { path: 'dashboard/administrador', component: AdministradorComponent },
+    { path: 'dashboard/administrador/ver-solicitud', component: VerSolicitudAdministradorComponent },
+    { path: 'dashboard/administrador/citas-agendadas', component: CitasAgendadasAdministradorComponent },
+    { path: 'dashboard/administrador/reporte', component: ReporteComponent },
     { path: '', redirectTo: 'login', pathMatch: 'full' }, // opcional: redirigir al login
     // otras rutas aquí...
 ];

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { DashboardSolicitanteDto } from '../models/DashboardSolicitanteDto';
 import { SolicitudDto } from '../models/SolicitudDto';
 import { DetalleSolicitudDto } from '../models/DetalleSolicitudDto';
+import { ReporteDto } from '../models/ReporteDto';
 
 @Injectable({
   providedIn: 'root'
@@ -35,12 +36,24 @@ export class SolicitudesService {
     return this.http.get<SolicitudDto>(`${this.apiUrl}/funcionario/${idSolicitud}`);
   }
 
+  getDetalleSolicitudAdministrador(idSolicitud: number): Observable<SolicitudDto> {
+    return this.http.get<SolicitudDto>(`${this.apiUrl}/administrador/${idSolicitud}`);
+  }
+
   actualizarSolicitudFuncionario(idSolicitud: number, solicitud: SolicitudDto): Observable<SolicitudDto> {
     return this.http.put<SolicitudDto>(`${this.apiUrl}/funcionario/${idSolicitud}`, solicitud);
   }
 
+  actualizarSolicitudAdministrador(idSolicitud: number, solicitud: SolicitudDto): Observable<SolicitudDto> {
+    return this.http.put<SolicitudDto>(`${this.apiUrl}/administrador/${idSolicitud}`, solicitud);
+  }
+
   getFotoSolicitud(idSolicitud: number): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/foto/${idSolicitud}`, { responseType: 'blob' });
+  }
+
+  getReporte(mes: number, anio: number): Observable<ReporteDto> {
+    return this.http.get<ReporteDto>(`${this.apiUrl}/reporte?mes=${mes}&anio=${anio}`);
   }
 
 }

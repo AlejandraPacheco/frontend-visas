@@ -1,0 +1,81 @@
+
+<div class="dashboard-container">
+    <!-- Menu lateral -->
+    <nav class="sidebar">
+        <div class="logo-section">
+        <img src="../../../assets/pasaporte.png" alt="Logo" class="logo" />
+        <span class="system-name">Visa.ES</span>
+        </div>
+        <hr class="divider" />
+
+        <div class="menu">
+        <button class="menu-button" (click)="administradorSolicitudes()">
+            Solicitudes
+        </button>
+        <button class="menu-button" (click)="administradorCitasAgendadas()">
+            Citas Asignadas
+        </button>
+        <button class="menu-button" (click)="administradorReporte()">
+            Reporte
+        </button>
+        </div>
+
+        <div class="user-section">
+        <span>{{ username }}</span>
+        <button (click)="logout()">Salir</button>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <div class="header">
+        <h1>Citas Agendadas</h1>
+        </div>
+
+        <div class="citas-form">
+        <div class="section-header">
+            <h2 class="section-title">Seleccione un horario</h2>
+            <!-- Datepicker -->
+            <mat-form-field appearance="fill">
+            <mat-label>Seleccionar semana</mat-label>
+            <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <!-- Leyenda -->
+        <div class="legend">
+            <span class="legend-item ocupado">Ocupado</span>
+            <span class="legend-item disponible">Disponible</span>
+        </div>
+
+        <div class="calendar-table">
+            <!-- Encabezados de días -->
+            <div class="calendar-header">
+            <div class="hour-cell"></div>
+            <div class="day-cell" *ngFor="let dia of semana">
+                {{ dia.nombre | titlecase }} <br />
+                {{ dia.fecha | date: 'dd/MM' }}
+            </div>
+            </div>
+
+            <!-- Filas de horarios -->
+            <div class="calendar-row" *ngFor="let hora of horas">
+            <div class="hour-cell">{{ hora }}</div>
+            <div
+                class="slot"
+                *ngFor="let dia of semana"
+                [ngClass]="{
+                'ocupado': getEstadoSlot(dia, hora) === 'Ocupado',
+                'disponible': getEstadoSlot(dia, hora) === 'Disponible'
+                }"
+                [matTooltip]="getTooltip(dia, hora)"
+                matTooltipPosition="above"
+            >
+            </div>
+            </div>
+        </div>
+        </div>
+    </main>
+</div>

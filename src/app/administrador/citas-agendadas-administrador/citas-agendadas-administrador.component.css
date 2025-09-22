@@ -1,0 +1,221 @@
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: linear-gradient(180deg, #6a11cb, #2575fc);
+    color: #fff;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+
+    /* ❌ Quitar position: fixed */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Logo y dividers */
+.logo-section {
+    margin-top: 30px;
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+}
+
+.system-name {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.menu li {
+    margin: 15px 0;
+}
+
+.menu li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.menu li.active a {
+    text-decoration: underline;
+}
+
+.user-section {
+    margin-top: auto; /* empuja hacia abajo */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.user-section button {
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.user-section button:hover {
+    background-color: #fff;
+    color: #2575fc;
+}
+
+/* Main content */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    background: #f4f4f4;
+    overflow-y: auto;
+}
+
+/* Todo lo demás igual que antes... */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.calendar-header,
+.calendar-row {
+    display: grid;
+    grid-template-columns: 100px repeat(5, 1fr);
+}
+
+.calendar-header {
+    background: #f0f0f0;
+    font-weight: bold;
+    text-align: center;
+}
+
+.day-cell {
+    padding: 10px;
+    border-left: 1px solid #ddd;
+}
+
+.hour-cell {
+    padding: 7px;
+    text-align: center;
+    background: #fafafa;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.slot {
+    height: 40px;
+    border-left: 1px solid #494949;
+    border-bottom: 1px solid #494949;
+    cursor: pointer;
+}
+
+.disponible {
+    background-color: #8de0a0;
+}
+
+.ocupado {
+    background-color: #d45963;
+    cursor: pointer;
+}
+
+.seleccionado {
+    background-color: #ffe078;
+}
+
+/* Leyenda */
+.legend {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.legend-item {
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    color: white;
+    font-size: 0.85rem;
+}
+
+.legend-item.ocupado { background: #d45963; }
+.legend-item.disponible { background: #8de0a0; }
+.legend-item.seleccionado { background: #ffe078; color: black; }
+
+
+/* Contenedor título + datepicker */
+.section-header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-header .mat-form-field {
+    width: 220px;
+}
+
+.menu-button {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espacio entre icono y texto */
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 10px 0;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  font-size: 16px;
+}
+
+.menu-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.menu-button.active {
+  text-decoration: underline;
+}
+
+.menu-button .material-icons {
+  font-size: 20px;
+}
+
