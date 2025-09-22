@@ -39,11 +39,9 @@
 
             <div class="input-group">
             <label for="ciudad">Ciudad *</label>
-            <select id="ciudad" name="ciudad" [(ngModel)]="solicitante.ciudad" required>
+            <select id="ciudad" name="ciudadId" [(ngModel)]="solicitante.ciudadId" required>
                 <option value="">-- Seleccionar --</option>
-                <option value="La Paz">La Paz</option>
-                <option value="Santa Cruz">Santa Cruz</option>
-                <option value="Cochabamba">Cochabamba</option>
+                <option *ngFor="let ciudad of ciudades" [value]="ciudad.idCiudad">{{ ciudad.nombreCiudad }}</option>
             </select>
             </div>
 

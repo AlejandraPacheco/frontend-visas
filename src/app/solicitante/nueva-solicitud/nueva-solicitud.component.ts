@@ -113,7 +113,7 @@ export class NuevaSolicitudComponent implements OnInit {
 
 
     // Asignar id del usuario logueado
-    this.solicitud.idSolicitante = parseInt(localStorage.getItem('idUsuario') || '0', 10);
+    this.solicitud.idSolicitante = parseInt(localStorage.getItem('idSolicitante') || '0', 10);
 
     console.log('DTO enviado:', this.solicitud);
 

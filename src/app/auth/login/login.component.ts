@@ -28,6 +28,7 @@ export class LoginComponent {
           localStorage.setItem('username', res.response.username);
           localStorage.setItem('rol', res.response.rol);
           localStorage.setItem('idUsuario', res.response.idUsuario);
+          localStorage.setItem('idSolicitante', res.response.idSolicitante); // Guardar idSolicitante si es aplicable
           console.log('rol', res.response.rol);
           console.log('Response:', res);
           // Redirigir según el rol
